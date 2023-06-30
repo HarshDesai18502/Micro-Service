@@ -1,0 +1,63 @@
+version: "3.3"
+services:
+  user:
+    build: ./user
+    ports:
+      - "3000:3000"
+    container_name: user
+    volumes:
+      - ./user:/app
+    depends_on:
+      - mysql
+
+  shop:
+    build: ./Shop
+    ports:
+      - "3001:3001"
+    container_name: shop
+    volumes:
+      - ./Shop:/usr/src/shop
+    depends_on:
+      - mongo
+
+  email:
+    build: ./email
+    container_name: email
+    volumes:
+      - ./email:/app
+
+  mongo:
+    image: mongo
+    ports:
+      - "27018:27017"
+    container_name: mongodb
+    volumes:
+      - $HOME/docker/mongo:/data/db
+
+  mysql:
+    image: mysql
+    ports:
+      - "3307:3306"
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Simform@123
+      MYSQL_DATABASE: nest_admin
+    volumes:
+      - $HOME/docker/mysql:/var/lib/mysql
+
+  rabbitmq:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    # command: rabbitmq-plugins enable rabbitmq_management
+
+volumes:
+  rabbitmq-data:
