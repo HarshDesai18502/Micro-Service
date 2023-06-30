@@ -1,0 +1,9 @@
+[submodule "Shop"]
+	path = Shop
+	url = https://github.com/HarshDesai18502/Shop.git
+[submodule "user"]
+	path = user
+	url = https://github.com/HarshDesai18502/user.git
+[submodule "email"]
+	path = email
+	url = https://github.com/HarshDesai18502/email.git
